@@ -1,4 +1,6 @@
 const { Notification } = require('../models/Notification');
+const logger = require('../config/logger');
+const { validationResult } = require('express-validator');
 
 // Kullanıcının bildirimlerini getir
 const getUserNotifications = async (req, res) => {
@@ -6,6 +8,12 @@ const getUserNotifications = async (req, res) => {
     const userId = req.user.id;
     const { page = 1, limit = 10, unread } = req.query;
     const offset = (page - 1) * limit;
+    
+    // Input validasyonu
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     
     // Filtre koşullarını oluştur
     const whereConditions = { userId };
@@ -33,6 +41,8 @@ const getUserNotifications = async (req, res) => {
       }
     });
     
+    logger.info(`Kullanıcı ${userId} için ${notifications.length} bildirim getirildi`);
+    
     res.status(200).json({
       notifications,
       unreadCount,
@@ -45,9 +55,9 @@ const getUserNotifications = async (req, res) => {
     });
     
   } catch (error) {
+    logger.error('Bildirimler alınırken hata:', error);
     res.status(500).json({ 
-      message: 'Bildirimler alınırken bir hata oluştu', 
-      error: error.message 
+      message: 'Bildirimler alınırken bir hata oluştu'
     });
   }
 };
@@ -57,6 +67,12 @@ const markAsRead = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
+    
+    // Input validasyonu
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     
     // Bildirimi bul
     const notification = await Notification.findOne({
@@ -74,15 +90,17 @@ const markAsRead = async (req, res) => {
     notification.isRead = true;
     await notification.save();
     
+    logger.info(`Bildirim ${id} okundu olarak işaretlendi`);
+    
     res.status(200).json({
       message: 'Bildirim okundu olarak işaretlendi',
       notification
     });
     
   } catch (error) {
+    logger.error('Bildirim güncellenirken hata:', error);
     res.status(500).json({ 
-      message: 'Bildirim güncellenirken bir hata oluştu', 
-      error: error.message 
+      message: 'Bildirim güncellenirken bir hata oluştu'
     });
   }
 };
@@ -103,15 +121,17 @@ const markAllAsRead = async (req, res) => {
       }
     );
     
+    logger.info(`Kullanıcı ${userId} için ${result[0]} bildirim okundu olarak işaretlendi`);
+    
     res.status(200).json({
       message: 'Tüm bildirimler okundu olarak işaretlendi',
       updatedCount: result[0]
     });
     
   } catch (error) {
+    logger.error('Bildirimler güncellenirken hata:', error);
     res.status(500).json({ 
-      message: 'Bildirimler güncellenirken bir hata oluştu', 
-      error: error.message 
+      message: 'Bildirimler güncellenirken bir hata oluştu'
     });
   }
 };
@@ -121,6 +141,12 @@ const deleteNotification = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
+    
+    // Input validasyonu
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     
     // Bildirimi bul
     const notification = await Notification.findOne({
@@ -137,14 +163,16 @@ const deleteNotification = async (req, res) => {
     // Bildirimi sil
     await notification.destroy();
     
+    logger.info(`Bildirim ${id} silindi`);
+    
     res.status(200).json({
       message: 'Bildirim başarıyla silindi'
     });
     
   } catch (error) {
+    logger.error('Bildirim silinirken hata:', error);
     res.status(500).json({ 
-      message: 'Bildirim silinirken bir hata oluştu', 
-      error: error.message 
+      message: 'Bildirim silinirken bir hata oluştu'
     });
   }
 };
