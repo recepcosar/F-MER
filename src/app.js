@@ -1,6 +1,16 @@
 // Çevre değişkenlerini yükle
 require('dotenv').config();
 
+// Kritik ortam değişkenlerinin varlığını kontrol et
+const requiredEnvVars = ['JWT_SECRET', 'NODE_ENV'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  console.error(`HATA: Eksik kritik ortam değişkenleri: ${missingEnvVars.join(', ')}`);
+  console.error('Lütfen .env dosyanızı kontrol edin. Güvenlik nedeniyle uygulama başlatılamıyor.');
+  process.exit(1);
+}
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -16,26 +26,34 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Güvenlik middleware'leri
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: true,
+  xssFilter: true,
+  hsts: true
+}));
 
 // CORS yapılandırması
 const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : (process.env.NODE_ENV === 'production' ? [] : '*'),
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400
 };
 app.use(cors(corsOptions));
 
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 dakika
-  max: 100 // IP başına limit
+  max: process.env.NODE_ENV === 'production' ? 60 : 100, // IP başına limit
+  standardHeaders: true,
+  legacyHeaders: false
 });
 app.use(limiter);
 
 // Body parser middleware'leri
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // API rotalarını ayarla
 app.use('/api/users', userRoutes);
@@ -59,13 +77,11 @@ app.use((err, req, res, next) => {
   
   const errorResponse = {
     message: 'Sunucu hatası oluştu',
-    code: err.status || 500
+    code: err.status || 500,
+    error: process.env.NODE_ENV === 'development' ? err.message : 'İşlem sırasında bir hata oluştu'
   };
   
-  if (process.env.NODE_ENV === 'development') {
-    errorResponse.stack = err.stack;
-  }
-  
+  // Stack trace'i sadece geliştirme ortamında logluyoruz ama hiçbir zaman istemciye göndermiyor
   res.status(errorResponse.code).json(errorResponse);
 });
 
@@ -75,9 +91,10 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log('Veritabanı bağlantısı başarılı.');
     
-    // Sadece geliştirme ortamında tabloları senkronize et
+    // Sadece geliştirme ortamında tabloları senkronize et ve asla force kullanma
     if (process.env.NODE_ENV === 'development') {
-      await sequelize.sync({ alter: true });
+      // Üretim ortamında manuel migrasyon yapılmalı
+      await sequelize.sync({ alter: false });
       console.log('Veritabanı tabloları senkronize edildi.');
     }
     
