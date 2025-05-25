@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
+require('../../env.js'); // Doğrudan ortam değişkenlerini yükle
 
-// Veritabanı bağlantı bilgilerini .env dosyasından al
+// Veritabanı bağlantı bilgilerini ortam değişkenlerinden al
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'sikayet_db',
   process.env.DB_USER || 'root',

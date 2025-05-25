@@ -1,28 +1,50 @@
 import axios from 'axios';
 
+// Backend API'nin tam URL'i
+const API_BASE_URL = 'http://localhost:3001/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  // CORS sorunlarını aşmak için credentials
+  withCredentials: false
 });
 
 // Request interceptor - token eklemek için
 api.interceptors.request.use(
   (config) => {
+    // Hata ayıklama için istekleri konsola yazdır
+    console.log(`${config.method.toUpperCase()} istek: ${config.baseURL}${config.url}`, config.data || '');
+    
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('İstek gönderme hatası:', error);
+    return Promise.reject(error);
+  }
 );
 
 // Response interceptor - hata kontrolü için
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Hata ayıklama için yanıtları konsola yazdır
+    console.log('API yanıtı:', response.status, response.data);
+    return response;
+  },
   (error) => {
+    console.error('API hatası:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
+    
     if (error.response && error.response.status === 401) {
       // Token süresi dolmuş veya geçersiz - çıkış yap ve login sayfasına yönlendir
       localStorage.removeItem('token');

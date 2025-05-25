@@ -40,6 +40,11 @@ const Login = () => {
     }
   };
 
+  // Kayıt sayfasına yönlendirme
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="login-container">
       <div className="header">
@@ -117,6 +122,8 @@ const Login = () => {
               <a href="/reset-password">Şifre Değiştir</a>
               <span>|</span>
               <a href="/forgot-password">Şifremi Unuttum</a>
+              <span>|</span>
+              <a href="/register" onClick={(e) => { e.preventDefault(); handleRegister(); }}>Kayıt Ol</a>
             </div>
           </div>
         </div>

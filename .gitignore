@@ -1,44 +1,46 @@
-# Ortam değişkenleri
-.env
-.env.*
-!.env.example
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
 
-# Bağımlılıklar
-/node_modules
-/frontend/node_modules
-
-# Loglar
-logs
+# Çalışma zamanı verisi
+logs/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.pnpm-debug.log*
 
-# Üretim ortamı
-/build
-/dist
-
-# Geçici dosyalar
-.DS_Store
+# Hassas bilgiler
+.env
+env.js
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# IDE/Editör dosyaları
-.idea
-.vscode
+# Derleme klasörleri
+/dist
+/build
+/out
+/.next
+/frontend/build
+
+# IDE dosyaları
+.idea/
+.vscode/
 *.swp
 *.swo
 
-# Test kapsama raporları
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+
+# Test
 /coverage
 
-# Gizli anahtarlar ve sertifikalar
-*.pem
-*.key
-*.cert
-*.crt
+# Debug
+.nyc_output
 
-# Veritabanı
-*.sqlite 
+# Diğer
+.vercel
+.netlify 

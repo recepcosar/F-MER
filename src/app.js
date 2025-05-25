@@ -1,5 +1,5 @@
 // Çevre değişkenlerini yükle
-require('dotenv').config();
+require('../env.js');
 
 // Kritik ortam değişkenlerinin varlığını kontrol et
 const requiredEnvVars = ['JWT_SECRET', 'NODE_ENV'];
@@ -32,11 +32,25 @@ app.use(helmet({
   hsts: true
 }));
 
+// CORS için özel middleware ekle (diğer CORS ayarlarından önce)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Preflight OPTIONS isteklerini işle
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
+
 // CORS yapılandırması
 const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : (process.env.NODE_ENV === 'production' ? [] : '*'),
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: '*', // Tüm originlere izin ver
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
   maxAge: 86400
 };
@@ -52,8 +66,8 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Body parser middleware'leri
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // API rotalarını ayarla
 app.use('/api/users', userRoutes);
@@ -63,7 +77,11 @@ app.use('/api/notifications', notificationRoutes);
 
 // Ana sayfa
 app.get('/', (req, res) => {
-  res.json({ message: 'Şikayet ve Öneri Yönetim Sistemi API' });
+  res.json({ 
+    message: 'Şikayet ve Öneri Yönetim Sistemi API',
+    version: '1.0.1',
+    status: 'running'
+  });
 });
 
 // 404 hata yakalama
