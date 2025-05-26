@@ -6,9 +6,9 @@ import firatLogo from '../assets/images/firat-logo.svg';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    username: '',
     password: '',
     confirmPassword: ''
   });
@@ -28,7 +28,7 @@ const Register = () => {
     e.preventDefault();
     
     // Form doğrulama
-    if (!formData.fullName || !formData.email || !formData.username || !formData.password) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
       setError('Tüm alanları doldurunuz');
       return;
     }
@@ -44,17 +44,17 @@ const Register = () => {
       
       // Hata ayıklama için verileri konsola yazdır
       console.log('Gönderilen kayıt verileri:', {
-        fullName: formData.fullName,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
-        username: formData.username,
         password: '********' // Güvenlik için şifreyi gizle
       });
       
       // API'ye kayıt isteği gönder
       const response = await authService.register({
-        fullName: formData.fullName,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
-        username: formData.username,
         password: formData.password
       });
       
@@ -112,9 +112,22 @@ const Register = () => {
               <div className="input-group">
                 <input
                   type="text"
-                  name="fullName"
-                  placeholder="Ad Soyad"
-                  value={formData.fullName}
+                  name="firstName"
+                  placeholder="Adınız"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="form-input"
+                  disabled={loading}
+                />
+                <span className="input-icon">👤</span>
+              </div>
+              
+              <div className="input-group">
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Soyadınız"
+                  value={formData.lastName}
                   onChange={handleChange}
                   className="form-input"
                   disabled={loading}
@@ -133,19 +146,6 @@ const Register = () => {
                   disabled={loading}
                 />
                 <span className="input-icon">✉️</span>
-              </div>
-              
-              <div className="input-group">
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Kullanıcı Adı"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="form-input"
-                  disabled={loading}
-                />
-                <span className="input-icon">👤</span>
               </div>
               
               <div className="input-group">

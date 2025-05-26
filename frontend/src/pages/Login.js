@@ -5,7 +5,7 @@ import '../styles/login.css';
 import firatLogo from '../assets/images/firat-logo.svg';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState('tr');
   const [error, setError] = useState('');
@@ -15,8 +15,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!username || !password) {
-      setError('Kullanıcı adı ve parola gereklidir');
+    if (!email || !password) {
+      setError('E-posta ve parola gereklidir');
       return;
     }
     
@@ -24,7 +24,7 @@ const Login = () => {
       setLoading(true);
       setError('');
       
-      const response = await authService.login({ username, password });
+      const response = await authService.login({ email, password });
       
       // Token'ı localStorage'a kaydet
       localStorage.setItem('token', response.data.token);
@@ -64,7 +64,7 @@ const Login = () => {
           <h2 className="login-title">Merkezi Kimlik<br />Doğrulama Servisi</h2>
           
           <div className="form-content">
-            <p className="form-description">Kullanıcı Adı ve Parolanızı giriniz</p>
+            <p className="form-description">E-posta ve Parolanızı giriniz</p>
             
             <div className="language-selector">
               <span 
@@ -87,14 +87,14 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
               <div className="input-group">
                 <input
-                  type="text"
-                  placeholder="Kullanıcı Adı"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  type="email"
+                  placeholder="E-posta"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="form-input"
                   disabled={loading}
                 />
-                <span className="input-icon user-icon">👤</span>
+                <span className="input-icon user-icon">✉️</span>
               </div>
               
               <div className="input-group">
