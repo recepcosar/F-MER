@@ -5,7 +5,11 @@ import '../styles/login.css';
 import firatLogo from '../assets/images/firat-logo.svg';
 
 const Login = () => {
+<<<<<<< HEAD
   const [username, setUsername] = useState('');
+=======
+  const [email, setEmail] = useState('');
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState('tr');
   const [error, setError] = useState('');
@@ -15,8 +19,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+<<<<<<< HEAD
     if (!username || !password) {
       setError('Kullanıcı adı ve parola gereklidir');
+=======
+    if (!email || !password) {
+      setError('E-posta ve parola gereklidir');
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
       return;
     }
     
@@ -24,7 +33,11 @@ const Login = () => {
       setLoading(true);
       setError('');
       
+<<<<<<< HEAD
       const response = await authService.login({ username, password });
+=======
+      const response = await authService.login({ email, password });
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
       
       // Token'ı localStorage'a kaydet
       localStorage.setItem('token', response.data.token);
@@ -40,6 +53,14 @@ const Login = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Kayıt sayfasına yönlendirme
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
   return (
     <div className="login-container">
       <div className="header">
@@ -59,7 +80,11 @@ const Login = () => {
           <h2 className="login-title">Merkezi Kimlik<br />Doğrulama Servisi</h2>
           
           <div className="form-content">
+<<<<<<< HEAD
             <p className="form-description">Kullanıcı Adı ve Parolanızı giriniz</p>
+=======
+            <p className="form-description">E-posta ve Parolanızı giriniz</p>
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
             
             <div className="language-selector">
               <span 
@@ -82,6 +107,7 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
               <div className="input-group">
                 <input
+<<<<<<< HEAD
                   type="text"
                   placeholder="Kullanıcı Adı"
                   value={username}
@@ -90,6 +116,16 @@ const Login = () => {
                   disabled={loading}
                 />
                 <span className="input-icon user-icon">👤</span>
+=======
+                  type="email"
+                  placeholder="E-posta"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-input"
+                  disabled={loading}
+                />
+                <span className="input-icon user-icon">✉️</span>
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
               </div>
               
               <div className="input-group">
@@ -117,6 +153,11 @@ const Login = () => {
               <a href="/reset-password">Şifre Değiştir</a>
               <span>|</span>
               <a href="/forgot-password">Şifremi Unuttum</a>
+<<<<<<< HEAD
+=======
+              <span>|</span>
+              <a href="/register" onClick={(e) => { e.preventDefault(); handleRegister(); }}>Kayıt Ol</a>
+>>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
             </div>
           </div>
         </div>
