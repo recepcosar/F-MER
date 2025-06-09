@@ -33,9 +33,5 @@
       "last 1 safari version"
     ]
   },
-<<<<<<< HEAD
-  "proxy": "http://localhost:3000"
-=======
   "proxy": "http://localhost:3001"
->>>>>>> ab6467a48539b77204fa4739d9e286e73a9f9738
 } 
