@@ -33,6 +33,10 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            display: none; /* Başlangıçta gizli */
+        }
+        .complaint-card.active {
+            display: block; /* Aktif sayfadaki kartları göster */
         }
         .complaint-card .card-title {
             color: #820000;
@@ -43,25 +47,67 @@
         }
         .status-placeholder {
             display: inline-block;
-            width: 24px; /* İkon boyutuna göre ayarlandı */
-            height: 24px; /* İkon boyutuna göre ayarlandı */
+            width: 24px;
+            height: 24px;
             margin-left: 10px;
             vertical-align: middle;
-            background-color: #e9ecef; /* Geçici olarak görünürlük için */
-            border: 1px dashed #ced4da; /* Geçici olarak görünürlük için */
+            background-color: #e9ecef;
+            border: 1px dashed #ced4da;
             border-radius: 4px;
         }
         .like-button {
             cursor: pointer;
             font-size: 1.5rem;
-            color: #6c757d; /* Varsayılan gri */
-            transition: color 0.2s, transform 0.1s;
+            color: #6c757d;
+            transition: all 0.3s ease;
         }
         .like-button.liked {
-            color: #dc3545; /* Kırmızı */
+            color: #dc3545;
+            transform: scale(1.1);
         }
         .like-button:hover {
             transform: scale(1.1);
+        }
+        .like-button.liked i {
+            font-weight: bold;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .pagination .page-link {
+            color: #820000;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            margin: 0 3px;
+            border: 2px solid #820000;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .pagination .page-link:hover {
+            background-color: #820000;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(130, 0, 0, 0.2);
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #820000;
+            border-color: #820000;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(130, 0, 0, 0.3);
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+        .pagination .page-item.disabled .page-link:hover {
+            background-color: transparent;
+            color: #ccc;
+            transform: none;
+            box-shadow: none;
         }
     </style>
 </head>
@@ -105,7 +151,7 @@
                         <span class="badge bg-secondary">2024-05-23</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="15"></i> <span class="like-count">15</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">15</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -119,7 +165,7 @@
                         <span class="badge bg-secondary">2024-05-22</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="28"></i> <span class="like-count">28</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">28</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -133,7 +179,7 @@
                         <span class="badge bg-secondary">2024-05-21</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="42"></i> <span class="like-count">42</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">42</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -147,7 +193,7 @@
                         <span class="badge bg-secondary">2024-05-20</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="35"></i> <span class="like-count">35</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">35</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -161,7 +207,7 @@
                         <span class="badge bg-secondary">2024-05-19</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="50"></i> <span class="like-count">50</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">50</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -175,7 +221,7 @@
                         <span class="badge bg-secondary">2024-05-18</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="62"></i> <span class="like-count">62</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">62</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -189,7 +235,7 @@
                         <span class="badge bg-secondary">2024-05-17</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="45"></i> <span class="like-count">45</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">45</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -203,7 +249,7 @@
                         <span class="badge bg-secondary">2024-05-16</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="70"></i> <span class="like-count">70</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">70</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -217,7 +263,7 @@
                         <span class="badge bg-secondary">2024-05-15</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="55"></i> <span class="like-count">55</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">55</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -231,7 +277,7 @@
                         <span class="badge bg-secondary">2024-05-14</span>
                     </div>
                     <div>
-                        <i class="bi bi-heart like-button" data-likes="30"></i> <span class="like-count">30</span> Beğeni
+                        <span class="like-button"><i class="bi bi-heart"></i></span> <span class="like-count">30</span> Beğeni
                     </div>
                 </div>
             </div>
@@ -405,6 +451,42 @@
             </div>
 
             <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Öğrenci Kulüpleri İçin Bütçe Desteği <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Rektörlük</p>
+                <p>Öğrenci kulüplerinin düzenlediği etkinlikler için ayrılan bütçenin yetersiz olduğunu düşünüyorum. Kulüplerin daha aktif olabilmesi adına bütçe desteğinin artırılmasını öneriyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-03</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="72"></i> <span class="like-count">72</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Akademik Personel İletişim Sorunları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Fen Fakültesi</p>
+                <p>Bazı akademik personelin e-postalara geç cevap vermesi veya ofis saatlerine uymaması nedeniyle öğrenciler olarak iletişim kurmakta zorlanıyoruz. İletişim kanallarının iyileştirilmesini talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-02</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="58"></i> <span class="like-count">58</span> Beğeni
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sayfalama -->
+        <nav aria-label="Sayfalama">
+            <ul class="pagination" id="pagination">
+                <!-- Sayfa numaraları JavaScript ile eklenecek -->
+            </ul>
+        </nav>
+    </div>
+
     <!-- Footer -->
     <footer class="footer text-center py-4">
         <div class="container">
@@ -433,71 +515,137 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const showAllBtn = document.getElementById('showAll');
-            const showComplaintsBtn = document.getElementById('showComplaints');
-            const showSuggestionsBtn = document.getElementById('showSuggestions');
-            const complaintCards = document.querySelectorAll('.complaint-card');
+            const itemsPerPage = 10;
+            const cards = document.querySelectorAll('.complaint-card');
+            const totalPages = Math.ceil(cards.length / itemsPerPage);
+            let currentPage = 1;
+            let currentType = 'all';
 
-            function filterCards(type) {
-                complaintCards.forEach(card => {
-                    if (type === 'all') {
-                        card.style.display = 'block';
-                    } else if (card.classList.contains('type-' + type)) {
-                        card.style.display = 'block';
+            // Sayfalama oluştur
+            function createPagination() {
+                const pagination = document.getElementById('pagination');
+                pagination.innerHTML = '';
+
+                // Önceki sayfa butonu
+                const prevLi = document.createElement('li');
+                prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+                prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Önceki">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>`;
+                pagination.appendChild(prevLi);
+
+                // Sayfa numaraları
+                for (let i = 1; i <= totalPages; i++) {
+                    const li = document.createElement('li');
+                    li.className = `page-item ${currentPage === i ? 'active' : ''}`;
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    pagination.appendChild(li);
+                }
+
+                // Sonraki sayfa butonu
+                const nextLi = document.createElement('li');
+                nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+                nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Sonraki">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>`;
+                pagination.appendChild(nextLi);
+
+                // Sayfa değiştirme olayları
+                pagination.querySelectorAll('.page-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (this.parentElement.classList.contains('disabled')) return;
+
+                        if (this.getAttribute('aria-label') === 'Önceki') {
+                            if (currentPage > 1) currentPage--;
+                        } else if (this.getAttribute('aria-label') === 'Sonraki') {
+                            if (currentPage < totalPages) currentPage++;
+                        } else {
+                            currentPage = parseInt(this.textContent);
+                        }
+
+                        showPage(currentPage);
+                        createPagination();
+                    });
+                });
+            }
+
+            // Sayfa göster
+            function showPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                cards.forEach((card, index) => {
+                    if (currentType === 'all' || card.classList.contains(`type-${currentType}`)) {
+                        card.style.display = (index >= start && index < end) ? 'block' : 'none';
                     } else {
                         card.style.display = 'none';
                     }
                 });
             }
 
-            function setActiveButton(activeButton) {
-                showAllBtn.classList.remove('active', 'btn-primary');
-                showAllBtn.classList.add('btn-outline-danger');
-                showComplaintsBtn.classList.remove('active', 'btn-primary');
-                showComplaintsBtn.classList.add('btn-outline-danger');
-                showSuggestionsBtn.classList.remove('active', 'btn-primary');
-                showSuggestionsBtn.classList.add('btn-outline-success');
+            // Filtreleme butonları
+            document.getElementById('showAll').addEventListener('click', function() {
+                currentType = 'all';
+                currentPage = 1;
+                showPage(currentPage);
+                createPagination();
+                updateActiveButton(this);
+            });
 
-                activeButton.classList.add('active', 'btn-primary');
-                activeButton.classList.remove('btn-outline-danger', 'btn-outline-success');
+            document.getElementById('showComplaints').addEventListener('click', function() {
+                currentType = 'şikayet';
+                currentPage = 1;
+                showPage(currentPage);
+                createPagination();
+                updateActiveButton(this);
+            });
+
+            document.getElementById('showSuggestions').addEventListener('click', function() {
+                currentType = 'öneri';
+                currentPage = 1;
+                showPage(currentPage);
+                createPagination();
+                updateActiveButton(this);
+            });
+
+            // Aktif butonu güncelle
+            function updateActiveButton(activeButton) {
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.classList.contains('btn-primary')) {
+                        btn.classList.remove('btn-primary');
+                        btn.classList.add('btn-outline-danger');
+                    }
+                });
+                activeButton.classList.add('active');
+                activeButton.classList.remove('btn-outline-danger');
+                activeButton.classList.add('btn-primary');
             }
 
-            showAllBtn.addEventListener('click', () => {
-                filterCards('all');
-                setActiveButton(showAllBtn);
-            });
-
-            showComplaintsBtn.addEventListener('click', () => {
-                filterCards('şikayet');
-                setActiveButton(showComplaintsBtn);
-            });
-
-            showSuggestionsBtn.addEventListener('click', () => {
-                filterCards('öneri');
-                setActiveButton(showSuggestionsBtn);
-            });
-
-            // Beğeni butonu işlevselliği
+            // Beğeni butonları
             document.querySelectorAll('.like-button').forEach(button => {
                 button.addEventListener('click', function() {
-                    let likeCountSpan = this.nextElementSibling;
-                    let currentLikes = parseInt(this.dataset.likes);
-
+                    const likeCount = this.nextElementSibling;
+                    let likes = parseInt(likeCount.textContent);
+                    
                     if (this.classList.contains('liked')) {
+                        likes--;
                         this.classList.remove('liked');
-                        this.classList.remove('bi-heart-fill');
-                        this.classList.add('bi-heart');
-                        currentLikes--;
+                        this.querySelector('i').className = 'bi bi-heart';
                     } else {
+                        likes++;
                         this.classList.add('liked');
-                        this.classList.remove('bi-heart');
-                        this.classList.add('bi-heart-fill');
-                        currentLikes++;
+                        this.querySelector('i').className = 'bi bi-heart-fill';
                     }
-                    this.dataset.likes = currentLikes;
-                    likeCountSpan.textContent = currentLikes;
+                    
+                    likeCount.textContent = likes;
                 });
             });
+
+            // İlk sayfayı göster
+            showPage(1);
+            createPagination();
         });
     </script>
 </body>
