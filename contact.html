@@ -102,8 +102,8 @@
     <!-- Şikayet/Öneri Formu -->
     <div class="form-container">
         <div class="form-header">
-            <i class="bi bi-exclamation-diamond me-2"></i>Şikayet Formu
-            <div style="font-size: 0.95rem; font-weight: 400; color: #f1f1f1;">Lütfen şikayetinizi detaylı bir şekilde belirtiniz.</div>
+            <i class="bi bi-exclamation-diamond me-2"></i><span id="formTitle">Şikayet Formu</span>
+            <div style="font-size: 0.95rem; font-weight: 400; color: #f1f1f1;" id="formSubtitle">Lütfen şikayetinizi detaylı bir şekilde belirtiniz.</div>
         </div>
         <form class="form-body">
             <div class="row mb-3">
@@ -174,7 +174,7 @@
                     <span style="font-size: 0.9rem; color: #888;">Şikayetinizi değerlendirebilmemiz için kişisel verilerinizin işlenmesine onay vermeniz gerekmektedir.</span>
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Şikayeti Gönder</button>
+            <button type="submit" class="btn btn-primary w-100" id="submitButton">Şikayeti Gönder</button>
         </form>
     </div>
 
@@ -190,9 +190,9 @@
                 </div>
                 <div class="col-md-4">
                     <div class="social-icons">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.facebook.com/firatedutr/?locale=tr_TR" target="_blank"><i class="bi bi-facebook"></i></a>
                         <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.instagram.com/firatresmihesap/" target="_blank"><i class="bi bi-instagram"></i></a>
                         <a href="#"><i class="bi bi-linkedin"></i></a>
                     </div>
                 </div>
@@ -211,22 +211,48 @@
         const oneriRadio = document.getElementById('oneriRadio');
         const sikayetDiv = document.getElementById('sikayetDetayDiv');
         const oneriDiv = document.getElementById('oneriDetayDiv');
-        sikayetRadio.addEventListener('change', function() {
-            if (this.checked) {
+        const formTitle = document.getElementById('formTitle');
+        const formSubtitle = document.getElementById('formSubtitle');
+        const submitButton = document.getElementById('submitButton');
+
+        function updateFormType(isSikayet) {
+            if (isSikayet) {
                 sikayetDiv.classList.remove('d-none');
                 oneriDiv.classList.add('d-none');
                 document.getElementById('sikayetDetay').setAttribute('required', 'required');
                 document.getElementById('oneriDetay').removeAttribute('required');
-            }
-        });
-        oneriRadio.addEventListener('change', function() {
-            if (this.checked) {
+                formTitle.textContent = 'Şikayet Formu';
+                formSubtitle.textContent = 'Lütfen şikayetinizi detaylı bir şekilde belirtiniz.';
+                submitButton.textContent = 'Şikayeti Gönder';
+            } else {
                 oneriDiv.classList.remove('d-none');
                 sikayetDiv.classList.add('d-none');
                 document.getElementById('oneriDetay').setAttribute('required', 'required');
                 document.getElementById('sikayetDetay').removeAttribute('required');
+                formTitle.textContent = 'Öneri Formu';
+                formSubtitle.textContent = 'Lütfen önerinizi detaylı bir şekilde belirtiniz.';
+                submitButton.textContent = 'Öneriyi Gönder';
+            }
+        }
+
+        sikayetRadio.addEventListener('change', function() {
+            if (this.checked) {
+                updateFormType(true);
             }
         });
+
+        oneriRadio.addEventListener('change', function() {
+            if (this.checked) {
+                updateFormType(false);
+            }
+        });
+
+        // Sayfa yüklendiğinde mevcut seçimi kontrol et
+        if (sikayetRadio.checked) {
+            updateFormType(true);
+        } else if (oneriRadio.checked) {
+            updateFormType(false);
+        }
     });
     </script>
 </body>
