@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şikayet ve Öneriler - Fırat Üniversitesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .navbar, .footer {
+            background-color: #820000;
+        }
+        .navbar a, .footer {
+            color: #ffffff;
+        }
+        .social-icons a {
+            color: #fff;
+            font-size: 2.2rem;
+            margin: 0 0.7rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .social-icons a:hover {
+            color: #ffd700;
+            transform: scale(1.2);
+        }
+        .complaint-card {
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .complaint-card .card-title {
+            color: #820000;
+            font-weight: bold;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        .status-placeholder {
+            display: inline-block;
+            width: 24px; /* İkon boyutuna göre ayarlandı */
+            height: 24px; /* İkon boyutuna göre ayarlandı */
+            margin-left: 10px;
+            vertical-align: middle;
+            background-color: #e9ecef; /* Geçici olarak görünürlük için */
+            border: 1px dashed #ced4da; /* Geçici olarak görünürlük için */
+            border-radius: 4px;
+        }
+        .like-button {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #6c757d; /* Varsayılan gri */
+            transition: color 0.2s, transform 0.1s;
+        }
+        .like-button.liked {
+            color: #dc3545; /* Kırmızı */
+        }
+        .like-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center text-white" href="index.html">
+                <img src="firat-logo.png" alt="Fırat Üniversitesi Logo" style="height:45px; margin-right:10px;"> Fırat Üniversitesi
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-white" href="index.html">Ana Sayfa</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="hakkimizda.html">Hakkımızda</a></li>
+                    <li class="nav-item"><a class="nav-link text-white active" href="sikayetler.html">Şikayetler & Öneriler</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="contact.html">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- İçerik -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4" style="color:#820000;">Tüm Şikayetler ve Öneriler</h2>
+        <div class="text-center mb-4">
+            <button class="btn btn-primary active me-2" id="showAll">Tümünü Göster</button>
+            <button class="btn btn-outline-danger me-2" id="showComplaints">Şikayetler</button>
+            <button class="btn btn-outline-success" id="showSuggestions">Öneriler</button>
+        </div>
+        <div id="complaintsList">
+            <!-- Örnek Şikayet/Öneri Kartları -->
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Akademik Takvim Uyumsuzluğu <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Mühendislik Fakültesi</p>
+                <p>Yeni akademik takvimin bazı derslerin sınav tarihleriyle çakıştığını fark ettim. Bu durum, öğrenciler için büyük bir zorluk yaratıyor ve ders çalışma düzenimizi etkiliyor.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-23</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="15"></i> <span class="like-count">15</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Kampüs İçi Bisiklet Yolları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Mimarlık Fakültesi</p>
+                <p>Kampüs içinde bisiklet kullanımını teşvik etmek amacıyla daha fazla bisiklet yolu ve park alanı yapılmasını öneriyorum. Bu hem çevre dostu bir ulaşım aracı hem de öğrencilerin sağlığı için faydalı olacaktır.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-22</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="28"></i> <span class="like-count">28</span> Beğeni
+                    </div>
+                </div>
+            </div>
+            
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Kantin Fiyatları Yüksekliği <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: İktisadi ve İdari Bilimler Fakültesi</p>
+                <p>Üniversite kantinindeki yiyecek ve içecek fiyatlarının öğrenciler için oldukça yüksek olduğunu düşünüyorum. Daha uygun fiyatlı seçenekler sunulmasını talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-21</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="42"></i> <span class="like-count">42</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Kütüphane Çalışma Ortamı Gürültüsü <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Fen Fakültesi</p>
+                <p>Kütüphanenin belirli saatlerde çok gürültülü olması nedeniyle ders çalışmakta zorluk yaşıyorum. Sessiz çalışma alanlarının artırılmasını veya gürültü kurallarının daha sıkı uygulanmasını rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-20</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="35"></i> <span class="like-count">35</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Kariyer Günleri Etkinlikleri <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Teknoloji Fakültesi</p>
+                <p>Üniversitemizin düzenlediği kariyer günleri etkinliklerinin sayısının artırılmasını ve farklı sektörlerden daha fazla şirketin davet edilmesini öneriyorum. Bu, mezuniyet sonrası iş imkanları konusunda bize daha fazla rehberlik edecektir.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-19</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="50"></i> <span class="like-count">50</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Ders Kayıt Sistemi Sorunları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Eğitim Fakültesi</p>
+                <p>Ders kayıt dönemlerinde sistemde yaşanan yoğunluk ve donmalar nedeniyle kayıt işlemlerini tamamlamakta zorluk çekiyoruz. Sistemin altyapısının güçlendirilmesini talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-18</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="62"></i> <span class="like-count">62</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Yeşil Alanların Bakımı <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Ziraat Fakültesi</p>
+                <p>Kampüs içerisindeki yeşil alanların ve çiçekliklerin daha düzenli bakılmasını, öğrenciler için daha estetik ve dinlendirici bir ortam oluşturulmasını öneriyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-17</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="45"></i> <span class="like-count">45</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Wi-Fi Problemleri <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: İletişim Fakültesi</p>
+                <p>Kampüs genelinde Wi-Fi bağlantısında sık sık kesintiler yaşanıyor ve hız düşüklüğü oluyor. Özellikle dersliklerde ve kütüphanede internet erişim kalitesinin artırılmasını rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-16</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="70"></i> <span class="like-count">70</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Sınav Takvimi Çakışmaları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Eğitim Fakültesi</p>
+                <p>Birden fazla dersin final sınavlarının aynı gün ve saate denk gelmesi büyük bir sorun yaratıyor. Bu durumun göz önünde bulundurularak takvim düzenlemesi yapılmasını rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-15</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="55"></i> <span class="like-count">55</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Etkinlik Alanlarının Artırılması <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Spor Bilimleri Fakültesi</p>
+                <p>Kampüs içerisindeki sosyal etkinlik alanlarının ve öğrenci kulüpleri için ayrılan mekanların yetersiz olduğunu düşünüyorum. Daha fazla ve donanımlı alanların oluşturulmasını öneriyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-14</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="30"></i> <span class="like-count">30</span> Beğeni
+                    </div>
+                </div>
+            </div>
+            
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Öğrenci Temsilciliği İletişim Eksikliği <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: İletişim Fakültesi</p>
+                <p>Öğrenci temsilciliklerinin öğrencilerden gelen sorunları yeterince dikkate almadığını ve geri bildirim mekanizmasının zayıf olduğunu düşünüyorum. İletişimin güçlendirilmesini talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-13</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="48"></i> <span class="like-count">48</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Online Ders Materyalleri Erişimi <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Fen Fakültesi</p>
+                <p>Tüm ders materyallerinin (sunumlar, notlar, ek kaynaklar) daha düzenli ve kolay erişilebilir bir şekilde online platformda yayımlanmasını öneriyorum. Bu, ders takibini kolaylaştıracaktır.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-12</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="65"></i> <span class="like-count">65</span> Beğeni
+                    </div>
+                </div>
+            </div>
+            
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Ulaşım Sorunları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Veterinerlik Fakültesi</p>
+                <p>Kampüs çevresindeki toplu taşıma imkanlarının yetersiz olduğunu ve özellikle yoğun saatlerde ulaşımın zorlaştığını düşünüyorum. Otobüs seferlerinin artırılmasını veya alternatif çözümler üretilmesini talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-11</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="75"></i> <span class="like-count">75</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Derslik Temizliği ve Bakımı <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Eğitim Fakültesi</p>
+                <p>Dersliklerin düzenli olarak temizlenmemesi ve bazı sıraların kırık olması eğitim kalitesini olumsuz etkiliyor. Daha sık temizlik ve bakım yapılmasını talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-10</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="40"></i> <span class="like-count">40</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Kampüs Uygulama Geliştirme Önerisi <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Yazılım Mühendisliği Fakültesi</p>
+                <p>Üniversite içi duyuruların, etkinliklerin ve ders programlarının takip edilebileceği mobil bir uygulama geliştirilmesini öneriyorum. Bu, öğrencilerin bilgiye erişimini kolaylaştıracaktır.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-09</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="85"></i> <span class="like-count">85</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Yemekhane Yemek Kalitesi <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Tıp Fakültesi</p>
+                <p>Yemekhanedeki yemeklerin kalitesi ve çeşitliliği konusunda şikayetlerim var. Daha sağlıklı ve çeşitli menüler sunulmasını, hijyen koşullarına daha fazla dikkat edilmesini rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-08</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="90"></i> <span class="like-count">90</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Sosyal Alanlarda Şarj İstasyonları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Mühendislik Fakültesi</p>
+                <p>Kampüs içindeki sosyal alanlarda (kantinler, kafeler, ortak çalışma alanları) daha fazla elektrik prizi ve USB şarj istasyonu kurulmasını öneriyorum. Dizüstü bilgisayar ve telefonlarımızı şarj etmede zorlanıyoruz.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-07</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="78"></i> <span class="like-count">78</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Yemekhane Kalabalıklığı <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Mühendislik Fakültesi</p>
+                <p>Yemekhane öğle aralarında çok kalabalık oluyor, yer bulmakta zorlanıyoruz ve uzun kuyruklar oluşuyor. Yemek saatlerinin esnetilmesi veya ek oturma alanları oluşturulmasını rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-06</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="80"></i> <span class="like-count">80</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Üniversite İçi Geri Dönüşüm Kutuları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Çevre Mühendisliği Fakültesi</p>
+                <p>Kampüs genelinde geri dönüşüm kutularının sayısının artırılmasını ve atık ayrıştırma bilincinin geliştirilmesi için farkındalık çalışmaları yapılmasını öneriyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-05</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="95"></i> <span class="like-count">95</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Amfi Dersliklerinin Yetersizliği <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Tıp Fakültesi</p>
+                <p>Özellikle kalabalık bölümlerde amfi dersliklerinin kapasitesinin yetersiz olması nedeniyle bazı öğrenciler dersleri ayakta takip etmek zorunda kalıyor. Amfi sayısının artırılmasını veya daha büyük dersliklerin kullanılmasını rica ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-04</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="60"></i> <span class="like-count">60</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+                <h5 class="card-title">Öneri: Öğrenci Kulüpleri İçin Bütçe Desteği <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Rektörlük</p>
+                <p>Öğrenci kulüplerinin düzenlediği etkinlikler için ayrılan bütçenin yetersiz olduğunu düşünüyorum. Kulüplerin daha aktif olabilmesi adına bütçe desteğinin artırılmasını öneriyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-03</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="72"></i> <span class="like-count">72</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-şikayet">
+                <h5 class="card-title">Şikayet: Akademik Personel İletişim Sorunları <span class="status-placeholder"></span></h5>
+                <p class="mb-2 text-muted">Fakülte: Fen Fakültesi</p>
+                <p>Bazı akademik personelin e-postalara geç cevap vermesi veya ofis saatlerine uymaması nedeniyle öğrenciler olarak iletişim kurmakta zorlanıyoruz. İletişim kanallarının iyileştirilmesini talep ediyorum.</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="badge bg-secondary">2024-05-02</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-heart like-button" data-likes="58"></i> <span class="like-count">58</span> Beğeni
+                    </div>
+                </div>
+            </div>
+
+            <div class="complaint-card shadow-sm type-öneri">
+    <!-- Footer -->
+    <footer class="footer text-center py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="firat-logo.png" alt="Fırat Üniversitesi Logo" class="img-fluid mb-3" style="max-height: 60px;">
+                </div>
+                <div class="col-md-4">
+                    <p>Elazığ, Türkiye</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                © 2024 Fırat Üniversitesi - Tüm hakları saklıdır
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showAllBtn = document.getElementById('showAll');
+            const showComplaintsBtn = document.getElementById('showComplaints');
+            const showSuggestionsBtn = document.getElementById('showSuggestions');
+            const complaintCards = document.querySelectorAll('.complaint-card');
+
+            function filterCards(type) {
+                complaintCards.forEach(card => {
+                    if (type === 'all') {
+                        card.style.display = 'block';
+                    } else if (card.classList.contains('type-' + type)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            function setActiveButton(activeButton) {
+                showAllBtn.classList.remove('active', 'btn-primary');
+                showAllBtn.classList.add('btn-outline-danger');
+                showComplaintsBtn.classList.remove('active', 'btn-primary');
+                showComplaintsBtn.classList.add('btn-outline-danger');
+                showSuggestionsBtn.classList.remove('active', 'btn-primary');
+                showSuggestionsBtn.classList.add('btn-outline-success');
+
+                activeButton.classList.add('active', 'btn-primary');
+                activeButton.classList.remove('btn-outline-danger', 'btn-outline-success');
+            }
+
+            showAllBtn.addEventListener('click', () => {
+                filterCards('all');
+                setActiveButton(showAllBtn);
+            });
+
+            showComplaintsBtn.addEventListener('click', () => {
+                filterCards('şikayet');
+                setActiveButton(showComplaintsBtn);
+            });
+
+            showSuggestionsBtn.addEventListener('click', () => {
+                filterCards('öneri');
+                setActiveButton(showSuggestionsBtn);
+            });
+
+            // Beğeni butonu işlevselliği
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    let likeCountSpan = this.nextElementSibling;
+                    let currentLikes = parseInt(this.dataset.likes);
+
+                    if (this.classList.contains('liked')) {
+                        this.classList.remove('liked');
+                        this.classList.remove('bi-heart-fill');
+                        this.classList.add('bi-heart');
+                        currentLikes--;
+                    } else {
+                        this.classList.add('liked');
+                        this.classList.remove('bi-heart');
+                        this.classList.add('bi-heart-fill');
+                        currentLikes++;
+                    }
+                    this.dataset.likes = currentLikes;
+                    likeCountSpan.textContent = currentLikes;
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
